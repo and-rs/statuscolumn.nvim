@@ -25,7 +25,7 @@ relnum.border = function()
   --  return "%#ColumnBorder1#" .. character
   --end
   if vim.v.relnum == 0 then
-    return "%#ColumnBorder0#" .. "¦"
+    return "%#ColumnBorder0#" .. "%#ColumnBorder2#│"
   end
   return "%#ColumnBase1#" .. character
 end
