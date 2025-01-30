@@ -6,7 +6,7 @@ local statuscolumn = {}
 local function defaults(options)
   return {
     enable_border = options.enable_border or false,
-    gradient_hl = options.gradient_hl or "Constant",
+    gradient_hl = options.gradient_hl or "Special",
   }
 end
 
@@ -23,6 +23,7 @@ function statuscolumn.setup(options)
   end
 
   local augroup = vim.api.nvim_create_augroup("StatusColumn", { clear = true })
+
   vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
     group = augroup,
     callback = function(ev)
