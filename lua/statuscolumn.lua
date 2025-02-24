@@ -32,10 +32,10 @@ function statuscolumn.setup(options)
         vim.opt_local.relativenumber = true
         vim.opt_local.statuscolumn = "%!v:lua.require('statuscolumn').init_lnum()"
 
-        vim.keymap.set("n", "<leader>0", "<cmd>Lazy reload statuscolumn.nvim<CR>", { desc = "Reload StatusColumn" })
+        vim.keymap.set("n", "<leader>cr", "<cmd>Lazy reload statuscolumn.nvim<CR>", { desc = "Reload StatusColumn" })
         vim.keymap.set(
           "n",
-          "<leader>9",
+          "<leader>ct",
           "<cmd>lua require('statuscolumn').toggle()<CR>",
           { desc = "Toggle Rel-number" }
         )
