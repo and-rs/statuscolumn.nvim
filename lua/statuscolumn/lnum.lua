@@ -1,31 +1,32 @@
 local lnum = {}
 
-lnum.column = function()
+lnum.number = function()
   local gap = "%="
+  local linenumber = string.format("%4d", vim.v.lnum)
 
   if vim.v.relnum == 2 then
-    return gap .. "%#Column2#" .. vim.v.lnum
+    return gap .. "%#Column2#" .. linenumber
   end
   if vim.v.relnum == 1 then
-    return gap .. "%#Column1#" .. vim.v.lnum
+    return gap .. "%#Column1#" .. linenumber
   end
   if vim.v.relnum == 0 then
-    return gap .. "%#Column0#" .. vim.v.lnum
+    return gap .. "%#Column0#" .. linenumber
   end
-  return gap .. "%#ColumnBase0#" .. vim.v.lnum
+  return gap .. "%#ColumnBase0#" .. linenumber
 end
 
 lnum.border = function()
-  local character = "│"
+  local character = " ▏"
 
-  --if vim.v.relnum == 2 then
-  --  return "%#ColumnBorder2#" .. character
-  --end
-  --if vim.v.relnum == 1 then
-  --  return "%#ColumnBorder1#" .. character
-  --end
+  if vim.v.relnum == 2 then
+    return "%#ColumnBorder2#" .. character
+  end
+  if vim.v.relnum == 1 then
+    return "%#ColumnBorder1#" .. character
+  end
   if vim.v.relnum == 0 then
-    return "%#ColumnBorder0#" .. "%#ColumnBorder2#│"
+    return "%#ColumnBorder0#" .. character
   end
   return "%#ColumnBase1#" .. character
 end
@@ -34,9 +35,9 @@ lnum.bootstrap = function(options)
   local result = ""
 
   if not options.enable_border then
-    result = lnum.column() .. " "
+    result = lnum.number() .. " "
   else
-    result = lnum.column() .. lnum.border()
+    result = lnum.number() .. lnum.border()
   end
   return "%s" .. result
 end
