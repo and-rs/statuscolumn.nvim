@@ -1,8 +1,32 @@
 local lnum = {}
 
 lnum.number = function()
-  local gap = "%="
+  local gap = "%#ColumnBase0#%="
   local linenumber = string.format("%4d", vim.v.lnum)
+
+  -- if vim.v.virtnum < 0 and vim.v.relnum == 2 then
+  --   return ""
+  -- end
+  -- if vim.v.virtnum < 0 and vim.v.relnum == 1 then
+  --   return ""
+  -- end
+  -- if vim.v.virtnum < 0 and vim.v.relnum == 0 then
+  --   return ""
+  -- end
+  --
+  -- if vim.v.virtnum >= 1 and vim.v.relnum == 2 then
+  --   return ""
+  -- end
+  -- if vim.v.virtnum >= 1 and vim.v.relnum == 1 then
+  --   return ""
+  -- end
+  -- if vim.v.virtnum >= 1 and vim.v.relnum == 0 then
+  --   return ""
+  -- end
+
+  if vim.v.virtnum ~= 0 then
+    return "%#ColumnBase0#    "
+  end
 
   if vim.v.relnum == 2 then
     return gap .. "%#Column2#" .. linenumber
@@ -17,28 +41,37 @@ lnum.number = function()
 end
 
 lnum.border = function()
-  local character = " ▏"
+  local character = "▕"
 
-  if vim.v.relnum == 2 then
-    return "%#ColumnBorder2#" .. character
+  -- if vim.v.relnum == 2 then
+  --   return "%#ColumnBorder2#" .. character
+  -- end
+  -- if vim.v.relnum == 1 then
+  --   return "%#ColumnBorder1#" .. character
+  -- end
+
+  if vim.v.virtnum < 0 and vim.v.relnum == 0 then
+    return "%#ColumnBase0#" .. character .. "%#None# "
   end
-  if vim.v.relnum == 1 then
-    return "%#ColumnBorder1#" .. character
+  if vim.v.virtnum >= 1 and vim.v.relnum == 0 then
+    return "%#Column1#" .. character .. "%#None# "
   end
+
+  if vim.v.virtnum ~= 0 then
+    return "%#ColumnBase0#" .. character .. "%#None# "
+  end
+
   if vim.v.relnum == 0 then
-    return "%#ColumnBorder0#" .. character
+    return "%#Column0#" .. character .. "%#None# "
   end
-  return "%#ColumnBase1#" .. character
+  return "%#ColumnBase0#" .. character .. "%#None# "
 end
 
-lnum.bootstrap = function(options)
+lnum.bootstrap = function()
   local result = ""
 
-  if not options.enable_border then
-    result = lnum.number() .. " "
-  else
-    result = lnum.number() .. lnum.border()
-  end
+  result = lnum.number() .. lnum.border()
+
   return "%s" .. result
 end
 

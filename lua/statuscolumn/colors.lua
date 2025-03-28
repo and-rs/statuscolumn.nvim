@@ -58,20 +58,32 @@ function colors.init(hl)
   local primary = colors.highlight(hl, "fg") or "#65bcff"
   local secondary = colors.highlight("SignColumn", "fg") or "#3b4261"
   local background = colors.highlight("StatusLine", "bg") or "#131621"
+  local column_background = colors.highlight("StatusLineNC", "bg") or "#131621"
 
   local numbers = colors.gradient_two_steps(primary, secondary)
-  local border = colors.gradient_two_steps(primary, background)
 
-  vim.api.nvim_set_hl(0, "ColumnBase0", { fg = secondary })
-  vim.api.nvim_set_hl(0, "ColumnBase1", { fg = background })
+  local set_hl = vim.api.nvim_set_hl
 
-  vim.api.nvim_set_hl(0, "Column0", { fg = primary })
-  vim.api.nvim_set_hl(0, "Column1", { fg = numbers.dark })
-  vim.api.nvim_set_hl(0, "Column2", { fg = numbers.light })
+  set_hl(0, "ColumnBase0", { fg = secondary, bg = column_background })
+  set_hl(0, "ColumnBase1", { fg = background, bg = column_background })
 
-  vim.api.nvim_set_hl(0, "ColumnBorder0", { fg = primary })
-  vim.api.nvim_set_hl(0, "ColumnBorder1", { fg = border.dark })
-  vim.api.nvim_set_hl(0, "ColumnBorder2", { fg = border.light })
+  set_hl(0, "Column0", { fg = primary, bg = column_background })
+  set_hl(0, "Column1", { fg = numbers.dark, bg = column_background })
+  set_hl(0, "Column2", { fg = numbers.light, bg = column_background })
+
+  -- SignColumn background color matching
+  vim.cmd("hi SignColumn guibg=" .. column_background)
+
+  set_hl(0, "DiagnosticSignOk", { fg = colors.highlight("DiagnosticOk", "fg"), bg = column_background })
+  set_hl(0, "DiagnosticSignHint", { fg = colors.highlight("DiagnosticHint", "fg"), bg = column_background })
+  set_hl(0, "DiagnosticSignWarn", { fg = colors.highlight("DiagnosticWarn", "fg"), bg = column_background })
+  set_hl(0, "DiagnosticSignInfo", { fg = colors.highlight("DiagnosticInfo", "fg"), bg = column_background })
+  set_hl(0, "DiagnosticSignError", { fg = colors.highlight("DiagnosticError", "fg"), bg = column_background })
+
+  set_hl(0, "GitSignsAdd", { fg = colors.highlight("diffAdded", "fg"), bg = column_background })
+  set_hl(0, "GitSignsUntracked", { fg = colors.highlight("diffAdded", "fg"), bg = column_background })
+  set_hl(0, "GitSignsChange", { fg = colors.highlight("diffChanged", "fg"), bg = column_background })
+  set_hl(0, "GitSignsDelete", { fg = colors.highlight("diffRemoved", "fg"), bg = column_background })
 end
 
 return colors

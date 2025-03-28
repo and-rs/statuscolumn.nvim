@@ -5,8 +5,7 @@ local statuscolumn = {}
 
 local function defaults(options)
   return {
-    enable_border = options.enable_border or false,
-    gradient_hl = options.gradient_hl or "Special",
+    gradient_hl = options.gradient_hl or "Normal",
   }
 end
 
@@ -15,7 +14,7 @@ function statuscolumn.setup(options)
   colors.init(statuscolumn.options.gradient_hl)
 
   statuscolumn.init_lnum = function()
-    return lnum.bootstrap(statuscolumn.options)
+    return lnum.bootstrap()
   end
 
   statuscolumn.init_relnum = function()
@@ -29,8 +28,8 @@ function statuscolumn.setup(options)
     callback = function(ev)
       local bufnr = ev.buf
       if vim.bo[bufnr].buftype == "" and vim.bo[bufnr].filetype ~= "" then
-        vim.opt_local.relativenumber = true
-        vim.opt_local.statuscolumn = "%!v:lua.require('statuscolumn').init_lnum()"
+        vim.opt.relativenumber = true
+        vim.opt.statuscolumn = "%!v:lua.require('statuscolumn').init_lnum()"
 
         vim.keymap.set("n", "<leader>cr", "<cmd>Lazy reload statuscolumn.nvim<CR>", { desc = "Reload StatusColumn" })
         vim.keymap.set(
@@ -40,7 +39,11 @@ function statuscolumn.setup(options)
           { desc = "Toggle Rel-number" }
         )
       else
-        vim.opt_local.statuscolumn = ""
+        vim.opt.relativenumber = false
+        vim.opt.numberwidth = 1
+        vim.opt.signcolumn = "no"
+        vim.opt.statuscolumn = "%s"
+        vim.opt.diffopt = "internal,foldcolumn:0,filler,followwrap,context:99999"
       end
     end,
   })
@@ -50,10 +53,10 @@ local lnum_state = true
 
 statuscolumn.toggle = function()
   if lnum_state then
-    vim.opt_local.statuscolumn = "%!v:lua.require('statuscolumn').init_relnum()"
+    vim.opt.statuscolumn = "%!v:lua.require('statuscolumn').init_relnum()"
     lnum_state = false
   else
-    vim.opt_local.statuscolumn = "%!v:lua.require('statuscolumn').init_lnum()"
+    vim.opt.statuscolumn = "%!v:lua.require('statuscolumn').init_lnum()"
     lnum_state = true
   end
 end
