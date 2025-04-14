@@ -29,8 +29,8 @@ function statuscolumn.setup(options)
       local bufnr = ev.buf
       if vim.bo[bufnr].buftype == "" and vim.bo[bufnr].filetype ~= "" then
         vim.opt.relativenumber = true
-        vim.opt.signcolumn = "auto"
         vim.opt.statuscolumn = "%!v:lua.require('statuscolumn').init_lnum()"
+        vim.opt.signcolumn = "yes:1"
 
         vim.keymap.set("n", "<leader>cr", "<cmd>Lazy reload statuscolumn.nvim<CR>", { desc = "Reload StatusColumn" })
         vim.keymap.set(
