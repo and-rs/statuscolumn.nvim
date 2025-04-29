@@ -41,7 +41,7 @@ lnum.number = function()
 end
 
 lnum.border = function()
-  local character = "▕"
+  local character = "🭵"
 
   -- if vim.v.relnum == 2 then
   --   return "%#ColumnBorder2#" .. character
