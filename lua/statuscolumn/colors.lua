@@ -57,8 +57,8 @@ end
 function colors.init(hl)
   local primary = colors.highlight(hl, "fg") or "#65bcff"
   local secondary = colors.highlight("SignColumn", "fg") or "#3b4261"
-  local background = colors.highlight("StatusLine", "bg") or "#131621"
-  local column_background = colors.highlight("StatusLineNC", "bg") or "#131621"
+  local background = colors.highlight("StatusLine", "bg")
+  local column_background = colors.highlight("NormalFloat", "bg")
 
   local numbers = colors.gradient_two_steps(primary, secondary)
 
@@ -80,10 +80,10 @@ function colors.init(hl)
   set_hl(0, "DiagnosticSignInfo", { fg = colors.highlight("DiagnosticInfo", "fg"), bg = column_background })
   set_hl(0, "DiagnosticSignError", { fg = colors.highlight("DiagnosticError", "fg"), bg = column_background })
 
-  set_hl(0, "GitSignsAdd", { fg = colors.highlight("diffAdded", "fg"), bg = column_background })
-  set_hl(0, "GitSignsUntracked", { fg = colors.highlight("diffAdded", "fg"), bg = column_background })
-  set_hl(0, "GitSignsChange", { fg = colors.highlight("diffChanged", "fg"), bg = column_background })
-  set_hl(0, "GitSignsDelete", { fg = colors.highlight("diffRemoved", "fg"), bg = column_background })
+  set_hl(0, "GitSignsAdd", { fg = colors.highlight("Added", "fg"), bg = column_background })
+  set_hl(0, "GitSignsUntracked", { fg = colors.highlight("Added", "fg"), bg = column_background })
+  set_hl(0, "GitSignsChange", { fg = colors.highlight("Changed", "fg"), bg = column_background })
+  set_hl(0, "GitSignsDelete", { fg = colors.highlight("Removed", "fg"), bg = column_background })
 end
 
 return colors
