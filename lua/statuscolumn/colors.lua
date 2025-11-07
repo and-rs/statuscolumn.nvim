@@ -11,7 +11,7 @@ function colors.highlight(name, option)
   local hl = vim.api.nvim_get_hl(0, { name = name })
   local color = hl[option]
   if not color then
-    print("No " .. option .. " color found for highlight group: " .. name)
+    vim.notify("Statuscolumn: No " .. option .. " color found for highlight group: " .. name)
     return nil
   end
   local hex_color = string.format("#%06x", color)
@@ -96,8 +96,8 @@ function colors.gradient_two_steps(start_hex, end_hex)
 end
 
 function colors.init(hl)
-  local primary = colors.highlight(hl, "fg") or "#65bcff"
-  local secondary = colors.adjust_hex(colors.highlight("Comment", "fg"), 0.9) or "#3b4261"
+  local primary = colors.highlight(hl, "fg")
+  local secondary = colors.adjust_hex(colors.highlight("Comment", "fg"), 0.9)
 
   local background = colors.highlight("StatusLine", "bg")
   local column_background = colors.highlight("NormalFloat", "bg")

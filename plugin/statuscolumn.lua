@@ -1,5 +1,5 @@
 if vim.fn.has("nvim-0.7.0") == 0 then
-  vim.api.nvim_err_writeln("statuscolumn requires at least nvim-0.7.0.1")
+  error("statuscolumn requires at least nvim-0.7.0.1")
   return
 end
 
@@ -16,7 +16,7 @@ local statuscolumn = require("statuscolumn")
 
 vim.api.nvim_create_user_command("StatusColumnTest", statuscolumn.test_msg, {})
 
-vim.api.nvim_create_autocmd({ "ColorSchemePre", "ColorScheme" }, {
+vim.api.nvim_create_autocmd({ "ColorScheme" }, {
   callback = function()
     statuscolumn.setup({})
   end,
